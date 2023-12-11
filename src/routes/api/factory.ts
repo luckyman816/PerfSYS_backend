@@ -21,6 +21,11 @@ router.post("/add", auth, async (req: AuthRequest, res: Response) => {
         employee: req.body.employee,
     });
     try {
+      const { factory } = req.body;
+      let factory_check = await Factory.findOne({ factory });
+      if (factory_check) {
+        return res.status(400).json({ errors: [{ msg: "Email already exists" }] });
+      }
       await factory_dd.save();
         res.json(factory_dd);
     }

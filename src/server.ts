@@ -8,6 +8,7 @@ import customer from "./routes/api/customer";
 import owner from "./routes/api/owner";
 import satistics from "./routes/api/satistics";
 import connectDB from "./lib/dbConnect";
+import sendGmail from "./routes/api/sendGmail";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/factory", factory);
 app.use("/api/customer", customer);
 app.use("/api/owner", owner);
 app.use("/api/satistics", satistics);
+app.use("/api/sendGmail", sendGmail);
 app.get("/api/get-suv-version", (req, res) => {
   res.send(
     JSON.stringify({

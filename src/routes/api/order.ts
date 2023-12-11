@@ -150,7 +150,7 @@ router.put("/:orderId", auth, async (req: AuthRequest, res: Response) => {
     );
     return res.json(updateOrder);
   } else {
-    return res.json({ msg: "Not found!" });
+    return res.status(400).json({ msg: "You have no permission" });
   }
 });
 router.put("/complete/:orderId/:userId", auth, async (req: AuthRequest, res: Response) => {
@@ -161,7 +161,8 @@ router.put("/complete/:orderId/:userId", auth, async (req: AuthRequest, res: Res
     cScore: req.body.cScore,
     pScore: req.body.pScore
   };
-  if (order) {
+  console.log("order-----------qScore", order.qScore);
+  if (order.qScore == '') {
     await Order.findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(req.params.orderId) },
       completeOrder
@@ -169,7 +170,7 @@ router.put("/complete/:orderId/:userId", auth, async (req: AuthRequest, res: Res
     const updatedOrders = await Order.find({userId: req.params.userId})
     return res.json(updatedOrders);
   } else {
-    return res.json({ msg: "Not found!" });
+    return res.status(400).json({ msg: "Not updated" });
   }
 });
 router.delete("/:orderId", auth, async (req: AuthRequest, res: Response) => {
