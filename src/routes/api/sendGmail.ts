@@ -13,36 +13,30 @@ interface AuthRequest extends Request {
   };
 }
 
-router.post("/send", async (req: AuthRequest, res: Response) => {
-  
-  let mailTransporter = nodemailer.createTransport({
-    service: "gmail",
+router.post("/send/:gmail", async (req: Request, res: Response) => {
+  const gmail =  req.params.gmail;
+  const mailTransporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
     auth: {
       user: "smart163410@gmail.com",
-      pass: "yaulgpldsmdnbilc",
+      pass: "gdobzmpamouonfjg",
     },
   });
-  mailTransporter.verify(function (error, success) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log("Server is ready to take our messages");
-    }
-  });
-  let mailDetails = {
-    from: "smart163410@gmail.com",
-    to: "zhangyunpei816@gmail.com",
-    subject: "Test mail",
-    text: "Invite my performance system website(url: https://perf-sys-frontend.vercel.app/)",
-  };
 
-  mailTransporter.sendMail(mailDetails, function (err, data) {
-    if (err) {
-      console.log("Error Occurs");
-    } else {
-      console.log("Email sent successfully");
-    }
-  });
+  try {
+    const res = await mailTransporter.sendMail({
+      from: "smart163410@gmail.com",
+      to: gmail,
+      subject: "Email Verification",
+      html: "Invite my performance system website(url: https://perf-sys-frontend.vercel.app/)",
+    });
+    console.log(res);
+   
+  } catch(error) {
+    console.log(error);
+  }
 });
 
 export default router;
