@@ -6,6 +6,7 @@ import order from "./routes/api/order";
 import factory from "./routes/api/factory";
 import customer from "./routes/api/customer";
 import owner from "./routes/api/owner";
+import sample from "./routes/api/sample"
 import satistics from "./routes/api/satistics";
 import connectDB from "./lib/dbConnect";
 import sendGmail from "./routes/api/sendGmail";
@@ -31,6 +32,7 @@ app.use("/api/order", order);
 app.use("/api/factory", factory);
 app.use("/api/customer", customer);
 app.use("/api/owner", owner);
+app.use("/api/sample", sample);
 app.use("/api/satistics", satistics);
 app.use("/api/sendGmail", sendGmail);
 app.get("/api/get-suv-version", (req, res) => {

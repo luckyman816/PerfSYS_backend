@@ -47,6 +47,43 @@ router.post("/create", auth, async (req: AuthRequest, res: Response) => {
     res.status(400).json({ msg: error });
   }
 });
+router.post(
+  "/getFactoryOrdersByPeriod",
+  auth,
+  async (req: AuthRequest, res: Response ) => {
+    try{
+      const order = await Order.find({customer: req.body.customer , owner: req.body.owner, readyDate: {$gte: req.body.fromDate, $lt: req.body.toDate}})
+      return res.json(order);
+    }catch (err) {
+      return res.status(400).json({ msg: "Input error" });
+    }
+  }
+);
+router.post(
+  "/getCustomerOrdersByPeriod",
+  auth,
+  async (req: AuthRequest, res: Response ) => {
+    try{
+      const order = await Order.find({factory: req.body.factory , owner: req.body.owner, readyDate: {$gte: req.body.fromDate, $lt: req.body.toDate}})
+      return res.json(order);
+    }catch (err) {
+      return res.status(400).json({ msg: "Input error" });
+    }
+  }
+);
+router.post(
+  "/getOwnerOrdersByPeriod",
+  auth,
+  async (req: AuthRequest, res: Response ) => {
+    try{
+      const order = await Order.find({factory: req.body.factory , customer: req.body.customer, readyDate: {$gte: req.body.fromDate, $lt: req.body.toDate}})
+      return res.json(order);
+    }catch (err) {
+      return res.status(400).json({ msg: "Input error" });
+    }
+  }
+);
+
 router.get(
   "/getFactoryByCustomer/:customer",
   auth,
