@@ -25,6 +25,7 @@
     "yarn": "^1.22.21"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.17",
     "@types/express-validator": "^3.0.0",
     "@types/mongoose": "^5.11.97",

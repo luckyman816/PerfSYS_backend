@@ -9,8 +9,7 @@ import owner from "./routes/api/owner";
 import sample from "./routes/api/sample"
 import satistics from "./routes/api/satistics";
 import connectDB from "./lib/dbConnect";
-import sendGmail from "./routes/api/sendGmail";
-import dotenv from "dotenv";
+ import dotenv from "dotenv";
 
 dotenv.config();
 const app: Express = express();
@@ -21,7 +20,7 @@ const path = require("path");
 connectDB();
 app.set("trust proxy", true);
 
-app.use(cors("*"));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -34,7 +33,6 @@ app.use("/api/customer", customer);
 app.use("/api/owner", owner);
 app.use("/api/sample", sample);
 app.use("/api/satistics", satistics);
-app.use("/api/sendGmail", sendGmail);
 app.get("/api/get-suv-version", (req, res) => {
   res.send(
     JSON.stringify({

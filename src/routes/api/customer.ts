@@ -1,7 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import mongoose from "mongoose";
 import Customer from "../../models/Customer";
-import User from "../../models/User";
 import auth from "../../middleware/auth";
 
 const router: Router = express.Router();
