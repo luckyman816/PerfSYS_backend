@@ -205,14 +205,14 @@ router.put(
       cScore: req.body.cScore,
       pScore: req.body.pScore,
     };
-    if (order.qScore.length == 0) {
+    if (order.qScore.length == 0 && completeOrder.qScore !== '' && completeOrder.cScore !== '' && completeOrder.pScore !== '') {
       await Order.findOneAndUpdate(
         { _id: new mongoose.Types.ObjectId(req.params.orderId) },
         completeOrder
       );
       const updatedOrders = await Order.find({ userId: req.params.userId });
       return res.json(updatedOrders);
-    } else {
+    }else {
       return res.status(400).json({ msg: "Not updated" });
     }
   }
