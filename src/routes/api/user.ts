@@ -186,7 +186,7 @@ router.delete(
         .json({ msg: "You don't have permission to delete user" });
     }
     await User.deleteOne({ _id: req.params.user_id });
-    res.json({ msg: "Delete Successfully" });
+    res.json(req.params.user_id);
   }
 );
 export default router;
