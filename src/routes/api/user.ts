@@ -44,14 +44,23 @@ router.post(
     if (user) {
       return res.status(400).json({ errors: [{ msg: "Email already exists" }] });
     }
-    const currentDate = new Date()
-    user = new User({
-      ...req.body,
-      role: "user",
-      status: "verified",
-      date: currentDate,
-    });
-
+    const currentDate = new Date();
+    let amount = (await User.find()).length;
+    if(amount === 0){
+      user = new User({
+        ...req.body,
+        role: "admin",
+        status: "verified",
+        date: currentDate,
+      });
+    } else {
+      user = new User({
+        ...req.body,
+        role: "user",
+        status: "verified",
+        date: currentDate,
+      });
+    }
     user.password = user.encryptPassword(user.password);
 
     await user.save();

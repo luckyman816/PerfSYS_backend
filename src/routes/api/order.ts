@@ -84,8 +84,20 @@ router.post(
     }
   }
 );
-//--------------------------------get orders by one indecx--------------------------------//
+//--------------------------------get orders by one index--------------------------------//
 
+router.post(
+  "/getOrdersBySample",
+  auth,
+  async (req: AuthRequest, res: Response) => {
+    try {
+      const order = await Order.find({ orderPO: req.body.sample, readyDate: {$gte: req.body.fromDate, $lt: req.body.toDate}});
+      return res.json(order);
+    } catch (error) {
+      return res.status(400).json({ msg: "Input error" });
+    }
+  }
+  );
 router.post(
   "/getOrdersByFactory",
   auth,

@@ -1,17 +1,12 @@
 import {Schema, model} from "mongoose";
 
 const SampleSchema: Schema = new Schema ({
-    factory: {
+    sample: {
         type: String,
         required: true
     },
-    customer: {
-        type: String,
-        required: true
-    },
-    owner: {
-        type: String,
-        required: true
+    location: {
+        type: String
     }
 });
 const Sample = model("Sample", SampleSchema);

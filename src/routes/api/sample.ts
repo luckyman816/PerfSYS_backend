@@ -15,15 +15,13 @@ interface AuthRequest extends Request {
 }
 router.post("/add", auth, async (req: AuthRequest, res: Response) => {
   const sample = new Sample({
-    factory: req.body.factory,
-    customer: req.body.customer,
-    owner: req.body.owner,
+    sample: req.body.sample,
+    location: req.body.location
   });
   try {
     let sample_check = await Sample.findOne({
-      factory: req.body.factory,
-      customer: req.body.customer,
-      owner: req.body.owner,
+      sample: req.body.sample,
+      location: req.body.location
     });
     if (sample_check) {
       return res
@@ -37,7 +35,7 @@ router.post("/add", auth, async (req: AuthRequest, res: Response) => {
   }
 });
 router.get("/all", auth, async (req: AuthRequest, res: Response) => {
-    const samples = await Sample.find().sort("factory");
+    const samples = await Sample.find().sort("sample");
     res.json(samples);
   });
 router.delete(
