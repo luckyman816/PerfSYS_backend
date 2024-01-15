@@ -217,16 +217,12 @@ router.put(
       cScore: req.body.cScore,
       pScore: req.body.pScore,
     };
-    if (order.qScore.length == 0 && completeOrder.qScore !== '' && completeOrder.cScore !== '' && completeOrder.pScore !== '') {
       await Order.findOneAndUpdate(
         { _id: new mongoose.Types.ObjectId(req.params.orderId) },
         completeOrder
       );
       const updatedOrders = await Order.find({ userId: req.params.userId });
       return res.json(updatedOrders);
-    }else {
-      return res.status(400).json({ msg: "Not updated" });
-    }
   }
 );
 router.post(
@@ -280,6 +276,20 @@ router.get(
   }
 );
 router.get(
+  "/getScoreCustomerSample/:customer",
+  auth,
+  async (req: AuthRequest, res: Response) => {
+    const orders = await Order.find({ customer: req.params.customer, orderPO: 'sample' });
+    if (orders.length) {
+      return res.json(orders);
+    } else if (!orders.length) {
+      res.status(204).json({ msg: "Not Found Any Orders!" });
+    } else {
+      res.status(400).json({ msg: "You have no permission" });
+    }
+  }
+);
+router.get(
   "/getScoreFactory/:factory",
   auth,
   async (req: AuthRequest, res: Response) => {
@@ -294,10 +304,38 @@ router.get(
   }
 );
 router.get(
+  "/getScoreFactorySample/:factory",
+  auth,
+  async (req: AuthRequest, res: Response) => {
+    const orders = await Order.find({ factory: req.params.factory, orderPO: "sample" });
+    if (orders.length) {
+      return res.json(orders);
+    } else if (!orders.length) {
+      res.status(204).json({ msg: "Not Found Any Orders!" });
+    } else {
+      res.status(400).json({ msg: "You have no permission" });
+    }
+  }
+);
+router.get(
   "/getScoreOwner/:owner",
   auth,
   async (req: AuthRequest, res: Response) => {
     const orders = await Order.find({ owner: req.params.owner });
+    if (orders.length) {
+      return res.json(orders);
+    } else if (!orders.length) {
+      res.status(204).json({ msg: "Not Found Any Orders!" });
+    } else {
+      res.status(400).json({ msg: "You have no permission" });
+    }
+  }
+);
+router.get(
+  "/getScoreOwnerSample/:owner",
+  auth,
+  async (req: AuthRequest, res: Response) => {
+    const orders = await Order.find({ owner: req.params.owner, orderPO: 'sample' });
     if (orders.length) {
       return res.json(orders);
     } else if (!orders.length) {

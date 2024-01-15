@@ -4,4 +4,3 @@ export default {
   jwtSecret: "kut10developers",
   githubToken: "<yoursecrectaccesstoken>",
 };
- 
